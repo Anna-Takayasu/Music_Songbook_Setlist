@@ -2,6 +2,7 @@ import io, json, csv
 import streamlit as st
 from setlist_engine import generate_set,calculate,clock,seconds
 from songbook import export_docx
+from setlist_word import export_setlist_word
 
 MOODS=['Calm','Gentle','Medium','Energetic','High energy']
 
@@ -126,6 +127,10 @@ def render():
     all_indices=[i for plan in st.session_state.sets for i in plan['songs']]
     st.caption('Word Songbook export follows the exact set order above. A song played twice is included twice. Songs not on the setlist are omitted.')
     if all_indices:
+        concert_title=st.text_input('Concert / event title for printed setlist',value='Setlist',key='concert_title_word')
+        include_times=st.checkbox('Include song durations in printed setlist',value=False,key='show_duration_word')
+        printable=export_setlist_word(songs, st.session_state.sets, concert_title, include_times)
+        st.download_button('🖨️ Download printable setlist (Word · Arial 18 pt · one set per page)', printable, file_name='Setlist_printable.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
         out=io.BytesIO();export_docx([songs[i] for i in all_indices],heading='SETLIST SONGBOOK') .save(out)
         st.download_button('📄 Export Songbook in setlist order',out.getvalue(),file_name='Setlist_ordered_songbook.docx')
         rows=[]

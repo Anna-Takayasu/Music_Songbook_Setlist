@@ -10,7 +10,7 @@ def candidates(songs, used=None):
     return [(i,s) for i,s in enumerate(songs) if i not in used and seconds(s)>0]
 
 def generate_set(songs, target_minutes, buffer_seconds=20, cover_target=None,
-                 start_mood='Energetic',end_mood='Energetic', used=None, eligible=None, seed=None):
+                 start_mood='Energetic',end_mood='Energetic', used=None, eligible=None, seed=None, min_bluegrass_fraction=0):
     """Greedy randomized selection with duration, cover quota, mood arc and vocalist variety.
     Returns indices into songs; no exact-fit guarantee."""
     rng=random.Random(seed)
@@ -29,8 +29,12 @@ def generate_set(songs, target_minutes, buffer_seconds=20, cover_target=None,
             cover_penalty=0 if desired_covers is None else (3 if is_cover and cover_count>=desired_covers else -1 if is_cover and cover_count<desired_covers else 0)
             previous=songs[picked[-1]].get('vocalist','') if picked else ''
             vocalist_penalty=2 if previous and previous==s.get('vocalist','') and previous!='Instrumental' else 0
+            target_bg=round((len(picked)+1)*min_bluegrass_fraction+0.4999)
+            current_bg=sum('bluegrass' in {tag.casefold() for tag in songs[k].get('styles',[])} for k in picked)
+            is_bluegrass='bluegrass' in {tag.casefold() for tag in s.get('styles',[])}
+            bg_penalty=8 if min_bluegrass_fraction and current_bg < target_bg and not is_bluegrass else 0
             remainder=budget-(elapsed+seconds(s)+(buffer_seconds if picked else 0))
-            return cover_penalty+vocalist_penalty + remainder/budget*0.4+rng.random()*2
+            return cover_penalty+vocalist_penalty+bg_penalty + remainder/max(budget,1)*0.4+rng.random()*2
         chosen=min(feasible,key=rank)
         i,s=chosen
         picked.append(i)

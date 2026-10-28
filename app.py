@@ -22,6 +22,7 @@ with st.sidebar:
  if st.button('Reset to fictional demo songs'):
   st.session_state.songs=json.loads((Path(__file__).parent/'demo_repertoire.json').read_text(encoding='utf-8'))
   st.session_state.sets=[]
+  st.session_state.occasion_presets={}
   st.session_state.edit=-1
   st.rerun()
  incoming=st.file_uploader('Import existing Word sheet (.docx)',type=['docx'])
@@ -35,7 +36,7 @@ with st.sidebar:
   data=json.load(json_file)
   if isinstance(data,list):st.session_state.songs=data;st.rerun()
   if isinstance(data,dict) and isinstance(data.get('songs'),list):
-   st.session_state.songs=data['songs'];st.session_state.sets=data.get('sets',[]);st.rerun()
+   st.session_state.songs=data['songs'];st.session_state.sets=data.get('sets',[]);st.session_state.occasion_presets=data.get('occasion_presets',{});st.rerun()
  st.download_button('Download library JSON',data=json.dumps(st.session_state.songs,ensure_ascii=False,indent=2),file_name='bluegrass_songs.json',mime='application/json')
  if st.session_state.songs:
   output=io.BytesIO();export_docx(st.session_state.songs).save(output)

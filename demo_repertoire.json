@@ -1,0 +1,128 @@
+[
+  {
+    "title": "Demo: Mountain Morning",
+    "artist": "Fictional example",
+    "key": "G",
+    "kind": "Song",
+    "capo": "None",
+    "bpm": "110",
+    "notes": "Fictional example; replace with your own data.",
+    "structure": "Intro > Verse > Chorus > Outro",
+    "lyrics": "Sample lyric line for layout testing.\n**Bold words** and [color=blue]blue words[/color].",
+    "duration_seconds": 180,
+    "origin": "Original",
+    "vocalist": "Singer A",
+    "mood": "Gentle",
+    "occasions": [],
+    "sections": [
+      {
+        "name": "Intro",
+        "chords": "G G C D\nG G D G"
+      },
+      {
+        "name": "Verse",
+        "chords": "G G C C\nD D G G"
+      },
+      {
+        "name": "Chorus",
+        "chords": "C C G G\nD D G G"
+      }
+    ]
+  },
+  {
+    "title": "Demo: River Bend Reel",
+    "artist": "Fictional example",
+    "key": "D",
+    "kind": "Instrumental",
+    "capo": "None",
+    "bpm": "128",
+    "notes": "Fictional instrumental example.",
+    "structure": "AABB",
+    "lyrics": "",
+    "duration_seconds": 155,
+    "origin": "Cover",
+    "vocalist": "",
+    "mood": "Energetic",
+    "occasions": [],
+    "sections": [
+      {
+        "name": "A part",
+        "chords": "D D G G\nA A D D"
+      },
+      {
+        "name": "B part",
+        "chords": "G G D D\nA A D D"
+      }
+    ]
+  },
+  {
+    "title": "Demo: Winter Lanterns",
+    "artist": "Fictional example",
+    "key": "C",
+    "kind": "Song",
+    "capo": "None",
+    "bpm": "92",
+    "notes": "Fictional occasion-tag example.",
+    "structure": "Verse > Chorus",
+    "lyrics": "Demo lyrics only.",
+    "duration_seconds": 205,
+    "origin": "Original",
+    "vocalist": "Singer B",
+    "mood": "Calm",
+    "occasions": [
+      "Christmas"
+    ],
+    "sections": [
+      {
+        "name": "Verse",
+        "chords": "C C F F\nG G C C"
+      }
+    ]
+  },
+  {
+    "title": "Demo: Sunny Trail",
+    "artist": "Fictional example",
+    "key": "B (G shapes)",
+    "kind": "Song",
+    "capo": "4",
+    "bpm": "115",
+    "notes": "Illustrates capo / sounding chords.",
+    "structure": "Verse > Chorus",
+    "lyrics": "Demo lyric, not a real song.",
+    "duration_seconds": 230,
+    "origin": "Cover",
+    "vocalist": "Singer A",
+    "mood": "High energy",
+    "occasions": [],
+    "sections": [
+      {
+        "name": "Verse",
+        "chords": "G G C D\nEm C D G"
+      }
+    ]
+  },
+  {
+    "title": "Demo: Festival Lights",
+    "artist": "Fictional example",
+    "key": "A",
+    "kind": "Song",
+    "capo": "None",
+    "bpm": "118",
+    "notes": "Fictional example.",
+    "structure": "Verse > Chorus",
+    "lyrics": "",
+    "duration_seconds": 195,
+    "origin": "Original",
+    "vocalist": "Singer B",
+    "mood": "Medium",
+    "occasions": [
+      "Festival"
+    ],
+    "sections": [
+      {
+        "name": "Chorus",
+        "chords": "A A D D\nE E A A"
+      }
+    ]
+  }
+]

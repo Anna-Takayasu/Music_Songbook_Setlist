@@ -1,28 +1,28 @@
 import io,json,re
 import streamlit as st
-from songbook import PRESETS,export_docx,import_docx,synth_preview,preview_html
+from songbook import export_docx,import_docx,synth_preview,preview_html
 from transpose import KEYS, parse_key, transpose_song
 st.set_page_config(page_title='Bluegrass Songbook & Setlist',layout='wide')
 from pathlib import Path
 if 'songs' not in st.session_state:
- st.session_state.songs=json.loads((Path(__file__).parent/'repertoire_all.json').read_text(encoding='utf-8'))
+ 
+ try:
+  st.session_state.songs=json.loads((Path(__file__).parent/'demo_repertoire.json').read_text(encoding='utf-8'))
+ except (FileNotFoundError,ValueError):
+  st.session_state.songs=[]
 mode=st.sidebar.radio('Start here', ['Songbook', 'Setlist'], index=0)
 if mode=='Setlist':
  from setlist_ui import render
  render()
  st.stop()
 st.title('🎻 Bluegrass Songbook Builder')
-st.caption('Edit, transpose and preview chord sheets; one chord token = one 2-beat box. All editing is local to your Streamlit session; no email address is requested.')
-if 'songs' not in st.session_state:
- try:
-  from pathlib import Path
-  st.session_state.songs=json.loads((Path(__file__).parent/'complete_songbook_24_entries.json').read_text(encoding='utf-8'))
- except (OSError,ValueError):st.session_state.songs=[]
+st.caption('Edit, transpose and preview chord sheets; one chord token = one 2-beat box. Public demo entries only. Imports and edits stay in your current app session unless you explicitly download them. Do not upload confidential material to public cloud services.')
 with st.sidebar:
  st.header('Library')
- if st.button('Load 4 starter arrangements'):
-  existing={s['title'].casefold() for s in st.session_state.songs}
-  st.session_state.songs += [json.loads(json.dumps(s)) for s in PRESETS if s['title'].casefold() not in existing]
+ if st.button('Reset to fictional demo songs'):
+  st.session_state.songs=json.loads((Path(__file__).parent/'demo_repertoire.json').read_text(encoding='utf-8'))
+  st.session_state.sets=[]
+  st.session_state.edit=-1
   st.rerun()
  incoming=st.file_uploader('Import existing Word sheet (.docx)',type=['docx'])
  if incoming and st.button('Import DOCX'):
@@ -54,7 +54,7 @@ elif sort=='All titles A–Z':indices.sort(key=lambda i:st.session_state.songs[i
 elif sort=='Instrumentals first':indices.sort(key=lambda i:(st.session_state.songs[i].get('kind')!='Instrumental',st.session_state.songs[i]['title'].casefold()))
 left,right=st.columns([1,2])
 with left:
- if not indices:st.info('Use the sidebar to add the four starter songs or import your Word sheet.')
+ if not indices:st.info('Add a new song, import your own Word document, or load the fictional examples.')
  for i in indices:
   s=st.session_state.songs[i]
   if st.button(f"{'🎻' if s.get('kind')=='Instrumental' else '🎤'} {s['title']} ({s.get('key','')})",key=f'open{i}',use_container_width=True):st.session_state.edit=i;st.rerun()
